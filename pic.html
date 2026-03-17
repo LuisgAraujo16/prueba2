@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tabla PORTA y PORTB - Todo Editable</title>
+  <style>
+    body {
+      font-family: Calibri, Arial, sans-serif;
+      background: #f0f0f5;
+      color: #000;
+      margin: 20px;
+      font-size: 14px;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    th, td {
+      border: 1px solid #888;
+      padding: 6px 8px;
+      text-align: center;
+      min-width: 40px;
+    }
+    th {
+      background: #d0e0ff;
+      color: #003;
+      font-weight: bold;
+    }
+    .hex-cell {
+      background: #fffacd;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    input[type="text"] {
+      width: 28px;
+      text-align: center;
+      border: 1px solid #aaa;
+      padding: 3px;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 4px rgba(0,102,204,0.4);
+    }
+    .porta-hex { background: #e6ffe6; }
+    .portb-hex { background: #fff0e6; }
+    .label-row th { background: #e0e0ff; font-size: 0.95em; }
+    .note {
+      text-align: center;
+      margin-top: 15px;
+      color: #555;
+      font-size: 0.9em;
+    }
+    .add-row {
+      text-align: center;
+      margin: 15px 0;
+    }
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0055aa;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tabla PORTA y PORTB</h1>
+
+  <table id="tablaPorts">
+    <thead>
+      <tr class="label-row">
+        <th>PORTA HEX</th>
+        <th>RA4</th>
+        <th>RA3</th>
+        <th>RA2</th>
+        <th>RA1</th>
+        <th>RA0</th>
+        <th>RB7</th>
+        <th>RB6</th>
+        <th>RB5</th>
+        <th>RB4</th>
+        <th>RB3</th>
+        <th>RB2</th>
+        <th>RB1</th>
+        <th>RB0</th>
+        <th>PORTB HEX</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <!-- Fila inicial (ejemplo 0x00 / 0xFF) -->
+      <tr class="data-row">
+        <td class="hex-cell porta-hex">0x00</td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td class="hex-cell portb-hex">0xFF</td>
+      </tr>
+
+      <!-- Fila inicial (ejemplo 0x05 / 0xFF) -->
+      <tr class="data-row">
+        <td class="hex-cell porta-hex">0x05</td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td class="hex-cell portb-hex">0xFF</td>
+      </tr>
+
+      <!-- Fila inicial (ejemplo 0x09 / 0xFF) -->
+      <tr class="data-row">
+        <td class="hex-cell porta-hex">0x09</td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="0"></td>
+        <td><input type="text" maxlength="1" data-group="a" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td><input type="text" maxlength="1" data-group="b" value="1"></td>
+        <td class="hex-cell portb-hex">0xFF</td>
+      </tr>
+
+      <!-- Fila vacía para empezar a editar -->
+      <tr class="data-row">
+        <td class="hex-cell porta-hex">—</td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td class="hex-cell portb-hex">—</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="add-row">
+    <button onclick="agregarFila()">+ Agregar fila nueva</button>
+  </div>
+
+  <div class="note">
+    Todas las filas son editables.<br>
+    Escribe solo 0 o 1 → el valor HEX se actualiza automáticamente.<br>
+    Puedes agregar tantas filas como necesites con el botón de arriba.
+  </div>
+
+  <script>
+    const tabla = document.getElementById('tablaPorts');
+    const tbody = document.getElementById('tbody');
+
+    function calcularHex(fila) {
+      const inputsA = fila.querySelectorAll('input[data-group="a"]');
+      const inputsB = fila.querySelectorAll('input[data-group="b"]');
+      const hexA = fila.querySelector('.porta-hex');
+      const hexB = fila.querySelector('.portb-hex');
+
+      // PORTA (RA4 → RA0 = 16,8,4,2,1)
+      let valA = 0;
+      let peso = 16;
+      inputsA.forEach(inp => {
+        let v = parseInt(inp.value) || 0;
+        if (v !== 0 && v !== 1) inp.value = '';
+        valA += v * peso;
+        peso /= 2;
+      });
+      hexA.textContent = '0x' + valA.toString(16).toUpperCase().padStart(2, '0');
+
+      // PORTB (RB7 → RB0 = 128,64,32,16,8,4,2,1)
+      let valB = 0;
+      peso = 128;
+      inputsB.forEach(inp => {
+        let v = parseInt(inp.value) || 0;
+        if (v !== 0 && v !== 1) inp.value = '';
+        valB += v * peso;
+        peso /= 2;
+      });
+      hexB.textContent = '0x' + valB.toString(16).toUpperCase().padStart(2, '0');
+    }
+
+    function actualizarTodas() {
+      document.querySelectorAll('.data-row').forEach(fila => {
+        calcularHex(fila);
+      });
+    }
+
+    function agregarFila() {
+      const filaNueva = document.createElement('tr');
+      filaNueva.className = 'data-row';
+      filaNueva.innerHTML = `
+        <td class="hex-cell porta-hex">—</td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="a" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td><input type="text" maxlength="1" data-group="b" value=""></td>
+        <td class="hex-cell portb-hex">—</td>
+      `;
+      tbody.appendChild(filaNueva);
+
+      // Añadir eventos a los nuevos inputs
+      filaNueva.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', () => {
+          calcularHex(filaNueva);
+        });
+      });
+
+      // Calcular la nueva fila inmediatamente
+      calcularHex(filaNueva);
+    }
+
+    // Eventos para todos los inputs existentes
+    document.querySelectorAll('input[type="text"]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        const fila = inp.closest('tr');
+        calcularHex(fila);
+      });
+    });
+
+    // Calcular todo al cargar la página
+    actualizarTodas();
+  </script>
+
+</body>
+</html>
